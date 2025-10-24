@@ -1,0 +1,6 @@
+name: Zap MCP Server SSE
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: Zap MCP Server SSE
+    url: http://localhost:9000/sse

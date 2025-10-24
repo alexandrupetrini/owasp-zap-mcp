@@ -1,0 +1,23 @@
+services:
+  # OWASP ZAP MCP Server - Pre-built Image (for security engineers)
+  owasp-zap-mcp-image:
+    image: ghcr.io/ashmere/owasp-zap-mcp:latest
+    container_name: owasp-zap-mcp-image
+    environment:
+      - ZAP_BASE_URL=${ZAP_BASE_URL:-http://zap:8080}
+      - ZAP_API_KEY=
+      - LOG_LEVEL=INFO
+      - SERVER_HOST=${SERVER_HOST:-0.0.0.0}
+      - SERVER_PORT=${SERVER_PORT:-3000}
+    command: ["python", "-m", "owasp_zap_mcp.main", "--sse"]
+    expose:
+      - ${SERVER_PORT:-3000}
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
